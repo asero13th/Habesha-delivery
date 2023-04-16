@@ -3,6 +3,39 @@ import Helmet from '../components/Helmet/Helmet';
 import { Container, Row, Col } from 'react-bootstrap';
 import heroImg from "../assets/images/hero.png"
 import { Link } from 'react-router-dom';
+import Category from '../components/UI/category/Category';
+import ProductCard from '../components/UI/product-card/ProductCard';
+
+import featureImg01 from "../assets/images/service-01.png";
+import featureImg02 from "../assets/images/service-02.png";
+import featureImg03 from "../assets/images/service-03.png";
+
+import products from "../assets/fake-data/products.js";
+
+import foodCategoryImg01 from "../assets/images/hamburger.png"
+import foodCategoryImg02 from "../assets/images/pizza.png"
+import foodCategoryImg03 from "../assets/images/bread.png"
+
+const featureData = [
+  {
+    title: "Quick Delivery",
+    imgUrl: featureImg01,
+    desc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus, doloremque.",
+  },
+
+  {
+    title: "Super Dine In",
+    imgUrl: featureImg02,
+    desc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus, doloremque.",
+  },
+  {
+    title: "Easy Pick Up",
+    imgUrl: featureImg03,
+    desc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus, doloremque.",
+  },
+];
+
+
 const Home = () => {
   return (
     <Helmet title="home">
@@ -32,6 +65,61 @@ const Home = () => {
                 </div>
                 
               </Col>
+            </Row>
+          </Container>
+        </section>
+        <section className='pt-0'>
+          <Category /> 
+        </section>
+        <section>
+          <Container>
+            <Row>
+              <Col lg="12" className='text-center'>
+                <h5 className='feature__subtitle'>What we serve</h5>
+                <h2 className='feature__title'>Just sit back at home</h2>
+                <h2 className='feature__title'>We will <span>take care</span></h2>
+                <p className='mb-1 mt-4 feature__text'>There are many Habesha food delivery services available</p>
+                <p className='feature__text'>versatility, selection, scheduling, group ordering, and commission</p>
+              </Col>
+              {featureData.map((item, index) => {
+                  return(
+                    <Col lg="4" md="4" key={index} className='mt-5'>
+                        <div className="feature__item text-center px-5 py-3">
+                          <img src={item.imgUrl} alt='feature imgs' className='w-25 mb-3'/>
+                          <h5 className='fw-bold'>{item.title}</h5>
+                          <p>{item.desc}</p>
+                        </div>
+                    </Col>
+                  )
+              })}
+              
+             
+            </Row>
+          </Container> 
+        </section>
+        <section>
+          <Container>
+            <Row>
+              <Col lg="12"  className='text-center'>
+                <h2>Popular Foods</h2>
+              </Col>
+              <Col lg="12">
+                <div className="food__category">
+                  <button className='all__btn'>All</button>
+                  <button className=''><img src={foodCategoryImg01} alt='food-category'/>Burger</button>
+                  <button><img src={foodCategoryImg02} alt='food-category'/>Pizza</button>
+                  <button><img src={foodCategoryImg03} alt='food-category'/>Bread</button>
+                </div>
+              </Col>
+              {
+                products.map((item) =>{
+                  return (
+                    <Col lg="3" md="4" key={item.id} className='mt-5'>
+                      <ProductCard item={item}/>
+                    </Col>
+                  )
+                })
+              }
             </Row>
           </Container>
         </section>
