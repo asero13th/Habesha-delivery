@@ -5,6 +5,9 @@ import heroImg from "../assets/images/hero.png"
 import { Link } from 'react-router-dom';
 import Category from '../components/UI/category/Category';
 import ProductCard from '../components/UI/product-card/ProductCard';
+import { useState, useEffect } from 'react';
+import { ListGroup, ListGroupItem, } from 'react-bootstrap';
+
 
 import featureImg01 from "../assets/images/service-01.png";
 import featureImg02 from "../assets/images/service-02.png";
@@ -16,6 +19,7 @@ import foodCategoryImg01 from "../assets/images/hamburger.png"
 import foodCategoryImg02 from "../assets/images/pizza.png"
 import foodCategoryImg03 from "../assets/images/bread.png"
 
+import whyImg from "../assets/images/location.png"
 const featureData = [
   {
     title: "Quick Delivery",
@@ -37,6 +41,28 @@ const featureData = [
 
 
 const Home = () => {
+  const [category, setCategory] = useState('ALL')
+  const [allProducts, setAllProducts] = useState(products)
+
+  useEffect(() =>{
+      if (category === "ALL"){
+        setAllProducts(products)
+      }
+
+      if (category === "PIZZA"){
+        const filterdProducts = products.filter(item => item.category === "Pizza")
+        setAllProducts(filterdProducts)
+      }
+      if (category === "BURGER"){
+        const filterdProducts = products.filter(item => item.category === "Burger")
+        setAllProducts(filterdProducts)
+      }
+      if (category === "BREAD"){
+        const filterdProducts = products.filter(item => item.category === "Bread")
+        setAllProducts(filterdProducts)
+      }
+
+  }, [category ])
   return (
     <Helmet title="home">
         <section>
@@ -105,14 +131,26 @@ const Home = () => {
               </Col>
               <Col lg="12">
                 <div className="food__category">
-                  <button className='all__btn'>All</button>
-                  <button className=''><img src={foodCategoryImg01} alt='food-category'/>Burger</button>
-                  <button><img src={foodCategoryImg02} alt='food-category'/>Pizza</button>
-                  <button><img src={foodCategoryImg03} alt='food-category'/>Bread</button>
+                  <button 
+                  onClick={() => setCategory("ALL")}
+                  className={`${category === "ALL" ? 'foodBtnActive all__btn' : ""}`}
+                  >All</button>
+                  <button 
+                  className={`${category === "BURGER" ? 'foodBtnActive all__btn' : ""}`}
+                  onClick={() => setCategory("BURGER")}
+                  ><img src={foodCategoryImg01} alt='food-category'/>Burger</button>
+                  <button
+                  className={`${category === "PIZZA" ? 'foodBtnActive all__btn' : ""}`}
+                  onClick={() => setCategory("PIZZA")}
+                  ><img src={foodCategoryImg02} alt='food-category'/>Pizza</button>
+                  <button
+                  className={`${category === "BREAD" ? 'foodBtnActive all__btn' : ""}`}
+                  onClick={() => setCategory("BREAD")}
+                  ><img src={foodCategoryImg03} alt='food-category'/>Bread</button>
                 </div>
               </Col>
               {
-                products.map((item) =>{
+                allProducts.map((item) =>{
                   return (
                     <Col lg="3" md="4" key={item.id} className='mt-5'>
                       <ProductCard item={item}/>
@@ -122,7 +160,66 @@ const Home = () => {
               }
             </Row>
           </Container>
-        </section>
+        </section> 
+
+        <section className="why__choose-us">
+        <Container>
+          <Row>
+            <Col lg="6" md="6">
+              <img src={whyImg} alt="why-tasty-treat" className="w-100" />
+            </Col>
+
+            <Col lg="6" md="6">
+              <div className="why__tasty-treat">
+                <h2 className="tasty__treat-title mb-4">
+                  Why <span>Tasty Treat?</span>
+                </h2>
+                <p className="tasty__treat-desc">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Dolorum, minus. Tempora reprehenderit a corporis velit,
+                  laboriosam vitae ullam, repellat illo sequi odio esse iste
+                  fugiat dolor, optio incidunt eligendi deleniti!
+                </p>
+
+                <ListGroup className="mt-4">
+                  <ListGroupItem className="border-0 ps-0">
+                    <p className=" choose__us-title d-flex align-items-center gap-2 ">
+                      <i class="ri-checkbox-circle-line"></i> Fresh and tasty
+                      foods
+                    </p>
+                    <p className="choose__us-desc">
+                      Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                      Quia, voluptatibus.
+                    </p>
+                  </ListGroupItem>
+
+                  <ListGroupItem className="border-0 ps-0">
+                    <p className="choose__us-title d-flex align-items-center gap-2 ">
+                      <i class="ri-checkbox-circle-line"></i> Quality support
+                    </p>
+                    <p className="choose__us-desc">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Qui, earum.
+                    </p>
+                  </ListGroupItem>
+
+                  <ListGroupItem className="border-0 ps-0">
+                    <p className="choose__us-title d-flex align-items-center gap-2 ">
+                      <i class="ri-checkbox-circle-line"></i>Order from any
+                      location{" "}
+                    </p>
+                    <p className="choose__us-desc">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Qui, earum.
+                    </p>
+                  </ListGroupItem>
+                </ListGroup>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+
     </Helmet>
   )
 }
