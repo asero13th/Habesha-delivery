@@ -1,7 +1,8 @@
-import React, {useRef, useEffect} from 'react'
-import { Container } from 'react-bootstrap'
-import logo from "../../assets/images/res-logo.png"
+import React, {useRef, useEffect} from 'react';
+import { Container } from 'react-bootstrap';
+import logo from "../../assets/images/res-logo.png";
 import { NavLink, Link } from 'react-router-dom';
+
 const nav__links = [
     {
       display: "Home",
@@ -22,6 +23,10 @@ const nav__links = [
   ];
 
 const Header = () => {
+
+  const menuRef = useRef(null)
+  const toggleMenu = () =>  menuRef.current.classList.toggle('show_menu')
+
   return (
     <header className="header">
         <Container>
@@ -35,10 +40,11 @@ const Header = () => {
         
          {/* ======= menu ======= */}
 
-         <div className="navigation">
+         <div className="navigation" ref={menuRef} onClick={toggleMenu}>
             <div className="menu d-flex align-items-center gap-5">
               {nav__links.map((item, index) => (
                 <NavLink
+                
                   to={item.path}
                   key={index}
                   className={(navClass) =>
@@ -51,6 +57,7 @@ const Header = () => {
             </div>
           </div>
            {/* ======== nav right icons ========= */}
+           
            <div className="nav__right d-flex align-items-center gap-4">
             <span className="cart__icon">
               <i class="ri-shopping-basket-line"></i>
@@ -63,14 +70,11 @@ const Header = () => {
               </Link>
             </span>
 
-            <span className="mobile__menu" >
+            <span className="mobile__menu" onClick={toggleMenu} >
               <i class="ri-menu-line"></i>
             </span>
           </div>
           </div>
-        
-
-
         </Container>
 
     </header>

@@ -1,10 +1,9 @@
 import React from 'react'
 
-const Helmet = (props) => {
-    document.title = "habesha-delivery " + props.title
+const Helmet = ({title, children}) => {
+    document.title = "habesha-delivery " + title
   return (
-   
-    <div className='m-100'>{props.children}</div>
+    <div className='m-100'>{children}</div>
   )
 }
 
