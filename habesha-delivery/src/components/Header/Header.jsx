@@ -1,50 +1,49 @@
-import React, {useRef, useEffect} from 'react';
-import { Container } from 'react-bootstrap';
+import React, { useRef, useEffect } from "react";
+import { Container } from "react-bootstrap";
 import logo from "../../assets/images/res-logo.png";
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link } from "react-router-dom";
+import { useCart } from "../../context/CartContext";
 
 const nav__links = [
-    {
-      display: "Home",
-      path: "/home",
-    },
-    {
-      display: "Foods",
-      path: "/foods",
-    },
-    {
-      display: "Cart",
-      path: "/cart",
-    },
-    {
-      display: "Contact",
-      path: "/contact",
-    },
-  ];
+  {
+    display: "Home",
+    path: "/home",
+  },
+  {
+    display: "Foods",
+    path: "/foods",
+  },
+  {
+    display: "Cart",
+    path: "/cart",
+  },
+  {
+    display: "Contact",
+    path: "/contact",
+  },
+];
 
 const Header = () => {
+  const { cartItems } = useCart();
 
-  const menuRef = useRef(null)
-  const toggleMenu = () =>  menuRef.current.classList.toggle('show_menu')
+  const menuRef = useRef(null);
+  const toggleMenu = () => menuRef.current.classList.toggle("show_menu");
 
   return (
     <header className="header">
-        <Container>
-            <div className="nav__wrapper d-flex align-items-center justify-content-between">
+      <Container>
+        <div className="nav__wrapper d-flex align-items-center justify-content-between">
+          <div className="logo">
+            <img src={logo} alt="logo" />
+            <h5>Habesha-Delivery</h5>
+          </div>
 
-  
-                <div className="logo">
-                    <img src={logo}  alt='logo'/>
-                    <h5>Habesha-Delivery</h5>
-                </div>
-        
-         {/* ======= menu ======= */}
+          {/* ======= menu ======= */}
 
-         <div className="navigation" ref={menuRef} onClick={toggleMenu}>
+          <div className="navigation" ref={menuRef} onClick={toggleMenu}>
             <div className="menu d-flex align-items-center gap-5">
               {nav__links.map((item, index) => (
                 <NavLink
-                
                   to={item.path}
                   key={index}
                   className={(navClass) =>
@@ -56,12 +55,14 @@ const Header = () => {
               ))}
             </div>
           </div>
-           {/* ======== nav right icons ========= */}
-           
-           <div className="nav__right d-flex align-items-center gap-4">
+          {/* ======== nav right icons ========= */}
+
+          <div className="nav__right d-flex align-items-center gap-4">
             <span className="cart__icon">
-              <i class="ri-shopping-basket-line"></i>
-              <span className="cart__badge"></span>
+              <Link to="/cart">
+                <i class="ri-shopping-basket-line"></i>
+                <span className="cart__badge">{cartItems.length}</span>
+              </Link>
             </span>
 
             <span className="user">
@@ -70,15 +71,14 @@ const Header = () => {
               </Link>
             </span>
 
-            <span className="mobile__menu" onClick={toggleMenu} >
+            <span className="mobile__menu" onClick={toggleMenu}>
               <i class="ri-menu-line"></i>
             </span>
           </div>
-          </div>
-        </Container>
-
+        </div>
+      </Container>
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
